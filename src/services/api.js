@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Certifique-se de que a URL da API está corretamente configurada
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.entrevistaslab.launchcontrol.com.br/api';
 
 console.log('API URL:', API_URL); // Log para debug
 
