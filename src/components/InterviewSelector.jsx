@@ -1,6 +1,8 @@
-// frontend/src/components/InterviewSelector.jsx
+// src/components/InterviewSelector.jsx
 import React, { useState } from 'react';
 import { mainInterviewTypes, seniorityLevels, interviewPrompts } from '../data/interviewTypes';
+import NetworkingAnimation from './NetworkingAnimation';
+import LoadingMessages from './LoadingMessages';
 
 const InterviewSelector = ({ onSelectInterview }) => {
   const [selectedMainType, setSelectedMainType] = useState(null);
@@ -80,22 +82,23 @@ const InterviewSelector = ({ onSelectInterview }) => {
 
   // Renderiza a primeira etapa - seleção de tipo principal
   const renderMainTypeSelection = () => (
-    <div>
+    <div className="animate-fade-in">
       <h3 className="text-xl font-medium text-dark-900 dark:text-white mb-6 text-center">
         Selecione o tipo de entrevista
       </h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {mainInterviewTypes.map((type) => {
+        {mainInterviewTypes.map((type, index) => {
           const IconComponent = type.icon;
           return (
             <div
               key={type.id}
               onClick={() => handleMainTypeSelect(type.id)}
-              className="p-6 rounded-xl border border-gray-200 dark:border-slate-700 hover:border-primary-300 dark:hover:border-primary-800 bg-white dark:bg-slate-800 transition-all cursor-pointer hover:shadow-md"
+              className="p-6 rounded-xl border border-gray-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary-light bg-white dark:bg-slate-800 transition-all cursor-pointer hover:shadow-lg transform hover:scale-105 animate-slide-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex flex-col items-center text-center">
-                <div className="text-primary-600 dark:text-primary-400 mb-4">
+                <div className="text-primary dark:text-primary-light mb-4">
                   <IconComponent />
                 </div>
                 <h3 className="text-lg font-semibold text-dark-900 dark:text-white mb-2">
@@ -114,7 +117,7 @@ const InterviewSelector = ({ onSelectInterview }) => {
 
   // Renderiza a segunda etapa - seleção de nível
   const renderLevelSelection = () => (
-    <div>
+    <div className="animate-fade-in">
       <div className="flex items-center mb-6">
         <button
           onClick={goToPreviousStep}
@@ -130,23 +133,24 @@ const InterviewSelector = ({ onSelectInterview }) => {
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        {seniorityLevels.map((level) => {
+        {seniorityLevels.map((level, index) => {
           const IconComponent = level.icon;
           return (
             <div
               key={level.id}
               className={`
-                p-4 rounded-xl border transition-all cursor-pointer
+                p-4 rounded-xl border transition-all cursor-pointer animate-slide-up transform hover:scale-105
                 ${
                   selectedLevel === level.id
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 dark:border-primary-700 shadow-md'
-                    : 'border-gray-200 dark:border-slate-700 hover:border-primary-300 dark:hover:border-primary-800 bg-white dark:bg-slate-800'
+                    ? 'border-primary bg-primary-50 dark:bg-primary-900/20 dark:border-primary-light shadow-md'
+                    : 'border-gray-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary-light bg-white dark:bg-slate-800'
                 }
               `}
+              style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => handleLevelSelect(level.id)}
             >
               <div className="flex items-start space-x-4">
-                <div className={`text-primary-600 dark:text-primary-400 ${selectedLevel === level.id ? 'text-primary-700 dark:text-primary-300' : ''}`}>
+                <div className={`text-primary dark:text-primary-light ${selectedLevel === level.id ? 'text-primary-dark dark:text-primary-light' : ''}`}>
                   <IconComponent />
                 </div>
                 <div>
@@ -167,7 +171,7 @@ const InterviewSelector = ({ onSelectInterview }) => {
 
   // Renderiza a terceira etapa - personalização
   const renderCustomization = () => (
-    <div>
+    <div className="animate-fade-in">
       <div className="flex items-center mb-6">
         <button
           onClick={goToPreviousStep}
@@ -182,7 +186,7 @@ const InterviewSelector = ({ onSelectInterview }) => {
         </h3>
       </div>
       
-      <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-slate-700">
+      <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 animate-slide-up">
         {/* Tecnologias (apenas para entrevistas técnicas) */}
         {selectedMainType === 'technical' && (
           <div className="mb-5">
@@ -195,7 +199,7 @@ const InterviewSelector = ({ onSelectInterview }) => {
               value={technologies}
               onChange={(e) => setTechnologies(e.target.value)}
               placeholder="Ex: React, Node.js, JavaScript, TypeScript, SQL"
-              className="w-full px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-600 bg-white dark:bg-slate-700 border-gray-300 dark:border-slate-600"
+              className="w-full px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-slate-700 border-gray-300 dark:border-slate-600 transition-colors"
             />
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Informe as tecnologias específicas que você deseja que sejam abordadas na entrevista.
@@ -215,7 +219,7 @@ const InterviewSelector = ({ onSelectInterview }) => {
             placeholder={selectedMainType === 'technical' 
               ? "Ex: Tenho dificuldade com questões de algoritmos. Tenho 1 ano de experiência." 
               : "Ex: Quero treinar para posição de liderança. Tenho dificuldade em falar sobre projetos passados."}
-            className="w-full h-24 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-600 bg-white dark:bg-slate-700 border-gray-300 dark:border-slate-600"
+            className="w-full h-24 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light bg-white dark:bg-slate-700 border-gray-300 dark:border-slate-600 transition-colors"
           />
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
             Adicione detalhes específicos para personalizar a entrevista de acordo com suas necessidades.
@@ -228,13 +232,13 @@ const InterviewSelector = ({ onSelectInterview }) => {
             onClick={handleStartInterview}
             disabled={loading || (selectedMainType === 'technical' && !technologies.trim())}
             className={`
-              px-6 py-3 rounded-lg font-medium text-white
+              px-6 py-3 rounded-lg font-medium text-white transition-all transform hover:scale-105
               ${
                 loading || (selectedMainType === 'technical' && !technologies.trim())
                   ? 'bg-gray-400 dark:bg-slate-600 cursor-not-allowed'
-                  : 'bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-800'
+                  : 'bg-primary hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary animate-pulse-slow'
               }
-              transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800
+              focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-slate-800
             `}
           >
             {loading ? (
@@ -270,45 +274,56 @@ const InterviewSelector = ({ onSelectInterview }) => {
 
   // Renderização principal
   return (
-    <div className="max-w-4xl mx-auto py-4">
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-dark-900 dark:text-white mb-2">
-          DevClub TalentLab
+    <div className="max-w-4xl mx-auto py-4 relative">
+      {/* Background de networking */}
+      <div className="absolute inset-0 opacity-5">
+        <NetworkingAnimation />
+      </div>
+      
+      <div className="mb-8 text-center relative z-10">
+        <h2 className="text-2xl md:text-3xl font-bold text-dark-900 dark:text-white mb-2 animate-slide-up">
+          EntrevistaLab
         </h2>
-        <p className="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 max-w-xl mx-auto animate-slide-up" style={{ animationDelay: '0.1s' }}>
           Simule entrevistas com Fernanda, nossa recrutadora virtual especializada 
           em ajudar programadores a se prepararem para processos seletivos.
         </p>
       </div>
 
       {/* Indicador de progresso */}
-      <div className="hidden sm:flex items-center justify-center mb-8">
+      <div className="hidden sm:flex items-center justify-center mb-8 relative z-10">
         <div className="flex items-center w-full max-w-md">
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-            currentStep >= 1 ? 'bg-primary-500 text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-gray-400'
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${
+            currentStep >= 1 ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-gray-400'
           }`}>
             1
           </div>
-          <div className={`flex-1 h-1 ${
-            currentStep >= 2 ? 'bg-primary-500' : 'bg-gray-200 dark:bg-slate-700'
+          <div className={`flex-1 h-1 transition-colors duration-500 ${
+            currentStep >= 2 ? 'bg-primary' : 'bg-gray-200 dark:bg-slate-700'
           }`}></div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-            currentStep >= 2 ? 'bg-primary-500 text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-gray-400'
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${
+            currentStep >= 2 ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-gray-400'
           }`}>
             2
           </div>
-          <div className={`flex-1 h-1 ${
-            currentStep >= 3 ? 'bg-primary-500' : 'bg-gray-200 dark:bg-slate-700'
+          <div className={`flex-1 h-1 transition-colors duration-500 ${
+            currentStep >= 3 ? 'bg-primary' : 'bg-gray-200 dark:bg-slate-700'
           }`}></div>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-            currentStep >= 3 ? 'bg-primary-500 text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-gray-400'
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${
+            currentStep >= 3 ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-gray-400'
           }`}>
             3
           </div>
         </div>
       </div>
 
-      {renderCurrentStep()}
+      <div className="relative z-10">
+        {loading ? (
+          <LoadingMessages type="initial" />
+        ) : (
+          renderCurrentStep()
+        )}
+      </div>
     </div>
   );
 };

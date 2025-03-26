@@ -1,4 +1,4 @@
-// frontend/src/components/SpeechRecognizer.jsx
+// src/components/SpeechRecognizer.jsx
 import React, { useState, useEffect, useRef } from 'react';
 
 // Verifica suporte à API de reconhecimento de voz
@@ -174,10 +174,10 @@ const SpeechRecognizer = ({ isRecording, setIsRecording, onTranscriptionComplete
           onClick={startRecognition}
           disabled={disabled || !isSupported}
           className={`
-            p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800
+            p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-slate-800 transition-all
             ${disabled || !isSupported
               ? 'bg-gray-300 dark:bg-slate-600 cursor-not-allowed text-gray-500 dark:text-slate-400' 
-              : 'bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-300'
+              : 'bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-300 hover:scale-105'
             }
           `}
           aria-label="Iniciar gravação"
@@ -196,7 +196,7 @@ const SpeechRecognizer = ({ isRecording, setIsRecording, onTranscriptionComplete
           
           <button
             onClick={stopRecognition}
-            className="p-2 rounded-full bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+            className="p-2 rounded-full bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800 transition-all hover:scale-105"
             aria-label="Parar gravação e enviar"
             title="Parar gravação e enviar resposta automaticamente"
           >

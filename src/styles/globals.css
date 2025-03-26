@@ -1,4 +1,4 @@
-/* frontend/src/styles/globals.css */
+/* src/styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -54,14 +54,14 @@ body {
     display: inline-block;
     width: 0.5rem;
     height: 0.5rem;
-    background-color: theme('colors.primary.500');
+    background-color: theme('colors.primary');
     border-radius: 50%;
     margin: 0 0.1rem;
     opacity: 0.6;
   }
 
   .dark .typing-indicator span {
-    background-color: theme('colors.primary.400');
+    background-color: theme('colors.primary-light');
   }
 
   .typing-indicator span:nth-child(1) {
@@ -85,6 +85,56 @@ body {
   50% {
     transform: translateY(-0.5rem);
   }
+}
+
+/* Animações adicionais */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(55, 227, 89, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(55, 227, 89, 0.9), 0 0 30px rgba(55, 227, 89, 0.3); }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+  0% { transform: translateY(-20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Estilizações para o Markdown */
@@ -175,9 +225,148 @@ body {
   background-color: theme('colors.slate.500');
 }
 
+/* Estilização do input range para todos os navegadores */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  transition: all 0.3s ease;
+}
+
+/* Estilo para o tema escuro */
+.dark input[type="range"] {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Thumb (controle deslizante) para Chrome e Safari */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #37E359; /* Cor primária */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: #52FF74; /* Cor primária light */
+  box-shadow: 0 0 10px rgba(55, 227, 89, 0.5);
+}
+
+/* Thumb para Firefox */
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #37E359;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  background: #52FF74;
+  box-shadow: 0 0 10px rgba(55, 227, 89, 0.5);
+}
+
+/* Track para Firefox */
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+/* Estilo quando o range está ativo (sendo arrastado) */
+input[type="range"]:active::-webkit-slider-thumb {
+  box-shadow: 0 0 15px rgba(55, 227, 89, 0.7);
+  transform: scale(1.15);
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  box-shadow: 0 0 15px rgba(55, 227, 89, 0.7);
+  transform: scale(1.15);
+}
+
+/* Estilo para o range no app */
+.range-slider {
+  position: relative;
+  width: 100%;
+}
+
+.range-slider .value {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  background: #37E359;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  transform: translateX(50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.range-slider:hover .value {
+  opacity: 1;
+  top: -30px;
+}
+
+/* Melhorias para o controle de velocidade */
+.speed-control {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(55, 227, 89, 0.1);
+  border-radius: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.speed-control .icon {
+  font-size: 20px;
+  margin-right: 8px;
+  color: #37E359;
+}
+
+.dark .speed-control {
+  background: rgba(55, 227, 89, 0.15);
+}
+
+/* Versão grande para o range */
+.range-slider.lg input[type="range"] {
+  height: 8px;
+}
+
+.range-slider.lg input[type="range"]::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+}
+
+.range-slider.lg input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+}
+
 /* Estilo para o chat em tela cheia */
 .chat-container {
-  height: calc(100vh - 64px); /* Subtrai a altura do header */
+  height: calc(100vh - 64px - 52px); /* Subtrai a altura do header e footer */
   max-height: none;
   display: flex;
   flex-direction: column;

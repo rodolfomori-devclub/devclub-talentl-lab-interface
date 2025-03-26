@@ -1,4 +1,4 @@
-// frontend/tailwind.config.js
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -9,68 +9,72 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Cores do tema claro
+        // Cores principais usando a nova paleta
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+          DEFAULT: '#37E359', // Verde DevClub
+          dark: '#2BC348',
+          light: '#52FF74',
         },
-        // Cores do tema escuro
-        dark: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+        secondary: {
+          DEFAULT: '#051626', // Azul escuro DevClub
+          dark: '#020A13',
+          light: '#0A2E4D',
         },
-        // Cores de destaque
-        accent: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
-          950: '#022c22',
+        // Cores de fundo
+        background: {
+          light: '#F8F9FA',
+          dark: '#121212',
         },
-        // Cores de sucesso, erro, aviso
-        success: '#10b981',
-        error: '#ef4444',
-        warning: '#f59e0b',
-        info: '#3b82f6',
+        // Cores de texto
+        text: {
+          light: '#051626',
+          dark: '#F8F9FA',
+          muted: {
+            light: '#64748B',
+            dark: '#94A3B8',
+          },
+        },
       },
       fontFamily: {
         'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
-        'mono': ['JetBrains Mono', 'ui-monospace', 'monospace'],
+        'mono': ['Fira Code', 'monospace'],
       },
       boxShadow: {
-        'soft': '0 2px 15px 0 rgba(0, 0, 0, 0.05)',
-        'strong': '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
-      },
-      borderRadius: {
-        'xl': '1rem',
-        '2xl': '1.5rem',
+        'neon': '0 0 5px theme(colors.primary.DEFAULT), 0 0 20px theme(colors.primary.DEFAULT)',
+        'neon-lg': '0 0 10px theme(colors.primary.DEFAULT), 0 0 30px theme(colors.primary.DEFAULT)',
       },
       animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+        'slide-up': 'slideUp 0.5s ease-out',
+        'slide-down': 'slideDown 0.5s ease-out',
+        'fade-in': 'fadeIn 0.5s ease-out',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 5px rgba(55, 227, 89, 0.5)' },
+          '100%': { boxShadow: '0 0 20px rgba(55, 227, 89, 0.9), 0 0 30px rgba(55, 227, 89, 0.3)' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: 0 },
+          '100%': { transform: 'translateY(0)', opacity: 1 },
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(-20px)', opacity: 0 },
+          '100%': { transform: 'translateY(0)', opacity: 1 },
+        },
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },
